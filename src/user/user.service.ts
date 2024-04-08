@@ -1,8 +1,13 @@
 import { Injectable, NotImplementedException } from '@nestjs/common';
+import { InjectModel } from '@nestjs/sequelize';
+import { User } from './user.model';
 
 @Injectable()
 export class UserService {
-    constructor() {}
+    constructor(
+        @InjectModel(User)
+        private userModel: typeof User
+    ) {}
 
     addUser(email: string): Promise<void> {
         throw new NotImplementedException();

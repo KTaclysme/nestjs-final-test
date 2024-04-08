@@ -1,9 +1,19 @@
-import { AppRoutingModule } from './app.routing-module';
-import { ConfigurationModule } from './infrastructure/configuration/configuration.module';
-import { DatabaseModule } from './infrastructure/database/database.module';
 import { Module } from '@nestjs/common';
+import { SequelizeModule } from '@nestjs/sequelize';
+import { User } from './user/user.model';
+import { Task } from './task/task.model';
 
 @Module({
-    imports: [AppRoutingModule, ConfigurationModule, DatabaseModule],
+    imports: [
+        SequelizeModule.forRoot({
+            dialect: 'postgres',
+            host: 'postgres',
+            port: 5432,
+            username: 'postgres',
+            password: 'postgres',
+            database: 'postgres',
+            models: [User, Task],
+        }),
+    ],
 })
 export class AppModule {}
