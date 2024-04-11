@@ -6,7 +6,7 @@ import { User } from './user.model';
 export class UserService {
     constructor(
         @InjectModel(User)
-        private userModel: typeof User
+        private userModel: typeof User,
     ) {}
 
     addUser(email: string): Promise<void> {

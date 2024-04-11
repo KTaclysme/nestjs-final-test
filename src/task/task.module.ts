@@ -5,8 +5,8 @@ import { TaskService } from './task.service';
 import { TaskController } from './task.controller';
 
 @Module({
-    imports : [SequelizeModule.forFeature([Task])],
-    providers : [TaskService],
-    controllers : [TaskController],
+    imports: [SequelizeModule.forFeature([Task])],
+    providers: [TaskService],
+    controllers: [TaskController],
 })
 export class TaskModule {}
