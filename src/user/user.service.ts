@@ -9,8 +9,10 @@ export class UserService {
         private userModel: typeof User,
     ) {}
 
-    addUser(email: string): Promise<void> {
-        throw new NotImplementedException();
+    addUser(email: string): Promise<User> {
+        const addUser = new User;
+        addUser.email = email;
+        return addUser.save();
     }
 
     getUser(email: string): Promise<unknown> {
