@@ -15,8 +15,8 @@ export class UserService {
         return addUser.save();
     }
 
-    getUser(email: string): Promise<unknown> {
-        throw new NotImplementedException();
+    getUser(email: string): Promise<User|null> {
+        return this.userModel.findOne({where: {email}});
     }
 
     resetData(): Promise<void> {

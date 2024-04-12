@@ -11,8 +11,8 @@ export class UserController {
     }
 
     @Get()
-    getUser(){
-        return this.userService.getUser();
+    getUser(email:string){
+        return this.userService.getUser(email);
     }
 
     @Delete()
