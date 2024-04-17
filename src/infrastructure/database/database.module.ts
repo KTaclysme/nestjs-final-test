@@ -5,6 +5,6 @@ import { User } from 'src/user/user.model';
 
 @Module({
     imports: [SequelizeModule.forFeature([User, Task])],
-    exports: [DatabaseModule],
+    exports: [SequelizeModule],
 })
 export class DatabaseModule {}
