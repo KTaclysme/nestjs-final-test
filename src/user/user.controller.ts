@@ -6,17 +6,17 @@ export class UserController {
     constructor(private userService: UserService) {}
 
     @Post()
-    addUser(@Body() email:string) {
+    addUser(@Body() email: string) {
         return this.userService.addUser(email);
     }
 
     @Get()
-    getUser(email:string){
+    getUser(email: string) {
         return this.userService.getUser(email);
     }
 
     @Delete()
-    resetData(){
+    resetData() {
         return this.userService.resetData();
     }
 }
