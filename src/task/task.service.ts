@@ -1,22 +1,51 @@
-import { Injectable, NotImplementedException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { Task } from './task.model';
+import { InjectModel } from '@nestjs/sequelize';
 
 @Injectable()
 export class TaskService {
-    constructor() {}
+    constructor(
+        @InjectModel(Task)
+        private taskModel: typeof Task,
+    ) {}
 
-    addTask(name: string, userId: string, priority: number): Promise<void> {
-        throw new NotImplementedException();
+    async addTask(
+        name: string,
+        userId: string,
+        priority: number,
+    ): Promise<Task> {
+        try {
+            const addTask = new Task();
+            addTask.name = name;
+            addTask.userId = userId;
+            addTask.priority = priority;
+            return await addTask.save();
+        } catch (error) {
+            throw error;
+        }
     }
 
-    getTaskByName(name: string): Promise<unknown> {
-        throw new NotImplementedException();
+    async getTaskByName(name: string): Promise<Task | null> {
+        try {
+            return await this.taskModel.findOne({ where: { name } });
+        } catch (error) {
+            throw error;
+        }
     }
 
-    getUserTasks(userId: string): Promise<unknown[]> {
-        throw new NotImplementedException();
+    async getUserTasks(userId: string): Promise<Task | null> {
+        try {
+            return await this.taskModel.findOne({ where: { userId } });
+        } catch (error) {
+            throw error;
+        }
     }
 
-    resetData(): Promise<void> {
-        throw new NotImplementedException();
+    async resetData(): Promise<void> {
+        try {
+            await this.taskModel.destroy({ where: {}, truncate: true });
+        } catch (error) {
+            throw error;
+        }
     }
 }
