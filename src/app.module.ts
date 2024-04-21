@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { User } from './user/user.model';
 import { Task } from './task/task.model';
+import { UserService } from './user/user.service';
+import { TaskService } from './task/task.service';
 
 @Module({
     imports: [
@@ -15,5 +17,6 @@ import { Task } from './task/task.model';
             models: [User, Task],
         }),
     ],
+    providers: [UserService, TaskService],
 })
 export class AppModule {}
