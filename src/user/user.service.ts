@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from './user.model';
 
@@ -11,19 +11,22 @@ export class UserService {
 
     async addUser(email: string): Promise<User> {
         try {
-            const addUser = new User;
-            addUser.email = email;
-            return await addUser.save();
-        } catch (error) {            
-            throw new HttpException('Cet utilisateur existe déjà ou n\'est pas valide', HttpStatus.BAD_REQUEST);
+            const newUser = await this.userModel.create({ email });
+            return newUser;
+        } catch (error) {
+            throw new HttpException(
+                "Cet utilisateur existe déjà ou n'est pas valide",
+                HttpStatus.BAD_REQUEST,
+            );
         }
     }
 
-    async getUser(email: string): Promise<User|null> {
+    async getUser(email: string): Promise<User | null> {
         try {
-            return await this.userModel.findOne({ where: { email } });
+            const user = await this.userModel.findOne({ where: { email } });
+            return user;
         } catch (error) {
-            throw error; 
+            throw error;
         }
     }
 
@@ -31,7 +34,7 @@ export class UserService {
         try {
             await this.userModel.destroy({ where: {}, truncate: true });
         } catch (error) {
-            throw error; 
+            throw error;
         }
-    }    
+    }
 }
