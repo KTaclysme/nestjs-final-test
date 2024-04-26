@@ -1,12 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Task } from './task.model';
 import { InjectModel } from '@nestjs/sequelize';
 
 @Injectable()
 export class TaskService {
     constructor(
-        @InjectModel(Task)
-        private taskModel: typeof Task,
+        @Inject('TASK_REPOSITORY')
+        private taskRepository: typeof Task,
     ) {}
 
     async addTask(
@@ -27,7 +27,7 @@ export class TaskService {
 
     async getTaskByName(name: string): Promise<Task | null> {
         try {
-            return await this.taskModel.findOne({ where: { name } });
+            return await this.taskRepository.findOne({ where: { name } });
         } catch (error) {
             throw error;
         }
@@ -35,7 +35,7 @@ export class TaskService {
 
     async getUserTasks(userId: string): Promise<Task | null> {
         try {
-            return await this.taskModel.findOne({ where: { userId } });
+            return await this.taskRepository.findOne({ where: { userId } });
         } catch (error) {
             throw error;
         }
@@ -43,7 +43,7 @@ export class TaskService {
 
     async resetData(): Promise<void> {
         try {
-            await this.taskModel.destroy({ where: {}, truncate: true });
+            await this.taskRepository.destroy({ where: {}, truncate: true });
         } catch (error) {
             throw error;
         }
