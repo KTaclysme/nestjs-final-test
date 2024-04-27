@@ -6,7 +6,7 @@ export class UserController {
     constructor(private readonly userService: UserService) {}
 
     @Post()
-    addUser(@Body('email') email: string) {
+    addUser(@Body() email: string) {
         return this.userService.addUser(email);
     }
 
@@ -14,7 +14,7 @@ export class UserController {
     getUser(email: string) {
         return this.userService.getUser(email);
     }
-
+    
     @Delete()
     resetData() {
         return this.userService.resetData();

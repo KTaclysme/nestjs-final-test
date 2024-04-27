@@ -1,12 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Task } from './task.model';
 import { InjectModel } from '@nestjs/sequelize';
-
 @Injectable()
 export class TaskService {
     constructor(
-        @Inject('TASK_REPOSITORY')
-        private taskRepository: typeof Task,
+        @InjectModel(Task)
+        private readonly taskRepository: typeof Task,
     ) {}
 
     async addTask(

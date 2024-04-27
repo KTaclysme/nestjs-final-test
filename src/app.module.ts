@@ -1,9 +1,21 @@
 import { Module } from '@nestjs/common';
+import { SequelizeModule } from '@nestjs/sequelize';
+import { User } from './user/user.model';
+import { Task } from './task/task.model';
 import { UserModule } from './user/user.module';
 import { TaskModule } from './task/task.module';
-import { DatabaseModule } from './infrastructure/database/database.module';
 
 @Module({
-    imports: [UserModule, TaskModule, DatabaseModule],
+   imports: [
+        SequelizeModule.forRoot({
+          dialect: 'postgres',
+          host: 'localhost',
+          port: 24000,
+          username: 'postgres',
+          password: 'postgres',
+          database: 'postgres',
+          models: [User, Task],
+        }),UserModule, TaskModule,
+      ],
 })
 export class AppModule {}

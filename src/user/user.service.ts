@@ -1,16 +1,17 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { User } from './user.model';
+import { InjectModel } from '@nestjs/sequelize';
 
 @Injectable()
 export class UserService {
     constructor(
-        @Inject('USER_REPOSITORY')
-        private readonly userRepository: typeof User,
+        @InjectModel(User)
+        private readonly userModel: typeof User,
     ) {}
 
     async addUser(email: string): Promise<User> {
         try {
-            const newUser = await this.userRepository.create({ email });
+            const newUser = await this.userModel.create({ email });
             return newUser;
         } catch (error) {
             throw new HttpException(
@@ -22,7 +23,7 @@ export class UserService {
 
     async getUser(email: string): Promise<User | null> {
         try {
-            const user = await this.userRepository.findOne({ where: { email } });
+            const user = await this.userModel.findOne({ where: { email } });
             return user;
         } catch (error) {
             throw error;
@@ -31,7 +32,7 @@ export class UserService {
 
     async resetData(): Promise<void> {
         try {
-            await this.userRepository.destroy({ where: {}, truncate: true });
+            await this.userModel.destroy({ where: {}, truncate: true });
         } catch (error) {
             throw error;
         }

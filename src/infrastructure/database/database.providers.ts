@@ -1,22 +1,4 @@
-import { Sequelize } from 'sequelize-typescript';
-import { User } from '../../user/user.model';
-import { Task } from '../../task/task.model';
+import { Module } from '@nestjs/common';
 
-export const databaseProviders = [
-  {
-    provide: 'SEQUELIZE',
-    useFactory: async () => {
-      const sequelize = new Sequelize({
-        dialect: 'postgres',
-        host: 'localhost',
-        port: 5432,
-        username: 'postgres',
-        password: 'postgres',
-        database: 'postgres',
-      });
-      sequelize.addModels([User, Task]);
-      await sequelize.sync();
-      return sequelize;
-    },
-  },
-];
+@Module({})
+export class DatabaseModule {}
