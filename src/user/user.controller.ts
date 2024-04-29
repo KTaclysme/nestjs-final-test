@@ -1,6 +1,5 @@
-import { Body, Controller, Delete, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { UserService } from './user.service';
-
 @Controller('user')
 export class UserController {
     constructor(private readonly userService: UserService) {}
@@ -10,11 +9,11 @@ export class UserController {
         return this.userService.addUser(email);
     }
 
-    @Get()
-    getUser(email: string) {
+    @Get(':email')
+    getUser(@Param('email') email: string) {
         return this.userService.getUser(email);
     }
-    
+
     @Delete()
     resetData() {
         return this.userService.resetData();

@@ -1,40 +1,33 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Task } from './task.model';
-import { InjectModel } from '@nestjs/sequelize';
+import { TaskRepository } from './task.repository';
+import { TaskEntity } from './task.entity';
 @Injectable()
 export class TaskService {
     constructor(
-        @InjectModel(Task)
-        private readonly taskRepository: typeof Task,
+        private readonly _taskRepository: TaskRepository
     ) {}
 
-    async addTask(
-        name: string,
-        userId: string,
-        priority: number,
-    ): Promise<Task> {
+    async addTask(name: string, userId: string, priority: number): Promise<TaskEntity> {
         try {
-            const addTask = new Task();
-            addTask.name = name;
-            addTask.userId = userId;
-            addTask.priority = priority;
-            return await addTask.save();
+            const newTask = await this._taskRepository.addTask(name, userId, priority);
+            return newTask;
         } catch (error) {
             throw error;
         }
     }
 
-    async getTaskByName(name: string): Promise<Task | null> {
+    async getTaskByName(name: string): Promise<TaskEntity> {
         try {
-            return await this.taskRepository.findOne({ where: { name } });
+            return await this._taskRepository.getTaskByName(name);
         } catch (error) {
             throw error;
         }
     }
 
-    async getUserTasks(userId: string): Promise<Task | null> {
+    async getUserTasks(userId: string): Promise<TaskEntity> {
         try {
-            return await this.taskRepository.findOne({ where: { userId } });
+            return await this._taskRepository.getUserTasksById(userId);
         } catch (error) {
             throw error;
         }
@@ -42,7 +35,7 @@ export class TaskService {
 
     async resetData(): Promise<void> {
         try {
-            await this.taskRepository.destroy({ where: {}, truncate: true });
+            await this._taskRepository.resetData();
         } catch (error) {
             throw error;
         }
