@@ -1,6 +1,8 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { UserRepository } from './user.repository';
 import { UserEntity } from './user.entity';
+import { validationErrorCatcher } from '../errors/validationErrorCatcher';
+import { ValidationError } from 'sequelize';
 
 @Injectable()
 export class UserService {
@@ -11,13 +13,15 @@ export class UserService {
             const newUser = await this._userRepository.addUser(email);
             return newUser;
         } catch (error) {
-            throw new HttpException(
-                "Cet utilisateur existe déjà ou n'est pas valide",
-                HttpStatus.BAD_REQUEST,
-            );
+            // TODO: refacto cette partie du code
+            // throw error
+            if (error instanceof ValidationError) {
+                validationErrorCatcher(error);
+            }
         }
     }
-
+    
+    
     async getUser(email: string): Promise<UserEntity> {
         try {
             const user = await this._userRepository.getUserByEmail(email);

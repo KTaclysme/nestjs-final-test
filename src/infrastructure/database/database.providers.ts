@@ -1,7 +1,6 @@
 import { Sequelize } from 'sequelize-typescript';
-import { Task } from 'src/task/task.model';
-// import { User } from 'src/user/user.model';
-import { UserEntity } from 'src/user/user.entity';
+import { Task } from '../../task/task.model';
+import { User } from '../../user/user.model';
 
 export const databaseProviders = [
     {
@@ -15,9 +14,11 @@ export const databaseProviders = [
                 password: 'postgres',
                 database: 'postgres',
             });
-            sequelize.addModels([UserEntity, Task]);
+            sequelize.addModels([User, Task]);
             await sequelize.sync();
-            console.log(`Base de donnée créée et opérationnelle sur le port ${sequelize.options.port}`);
+            console.log(
+                `Base de donnée créée et opérationnelle sur le port ${sequelize.options.port}`,
+            );
             return sequelize;
         },
     },
