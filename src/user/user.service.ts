@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UserRepository } from './user.repository';
 import { UserEntity } from './user.entity';
 import { validationErrorCatcher } from '../errors/validationErrorCatcher';
@@ -15,9 +15,13 @@ export class UserService {
         } catch (error) {
             // TODO: refacto cette partie du code
             // throw error
-            if (error instanceof ValidationError) {
-                validationErrorCatcher(error);
-            }
+            throw new HttpException(
+                "Cet utilisateur existe déjà ou n'est pas valide",
+                HttpStatus.BAD_REQUEST,
+            );
+            // if (error instanceof ValidationError) {
+            //     validationErrorCatcher(error);
+            // }
         }
     }
     
