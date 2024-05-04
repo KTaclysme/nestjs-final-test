@@ -8,9 +8,9 @@ import {
 @Table
 export class User extends Model {
     @Column({
-        type: DataType.NUMBER,
+        type: DataType.INTEGER,
         primaryKey: true,
-        autoIncrement: true, 
+        autoIncrement: true,
         unique: true
     })
     id: number;

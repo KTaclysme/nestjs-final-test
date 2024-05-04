@@ -4,8 +4,8 @@ import { User } from './user.model';
 export class UserRepository {
     constructor(private _sequelize: Sequelize) {}
     
-    async addUser(email: string): Promise<User> {
-        return await User.create({ email });
+     addUser(email: string): Promise<User> {
+        return  User.create({ email });
     }
     
     async getUserByEmail(email: string): Promise<User | null> {

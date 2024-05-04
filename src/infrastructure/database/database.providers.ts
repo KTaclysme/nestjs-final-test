@@ -17,7 +17,7 @@ export const databaseProviders = [
             sequelize.addModels([User, Task]);
             await sequelize.sync();
             console.log(
-                `Base de donnée créée et opérationnelle sur le port ${sequelize.options.port}`,
+                `Base de donnée opérationnelle sur le port ${sequelize.options.port}`,
             );
             return sequelize;
         },

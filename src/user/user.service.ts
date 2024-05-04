@@ -10,11 +10,13 @@ export class UserService {
 
     async addUser(email: string): Promise<UserEntity> {
         try {
+            console.log(email, '444444444444444444444444444444444444444444444444444444')
             const newUser = await this._userRepository.addUser(email);
             return newUser;
         } catch (error) {
             // TODO: refacto cette partie du code
             // throw error
+            console.log(email, error, '000000000000000000000000000000000000000000000000')
             throw new HttpException(
                 "Cet utilisateur existe déjà ou n'est pas valide",
                 HttpStatus.BAD_REQUEST,
