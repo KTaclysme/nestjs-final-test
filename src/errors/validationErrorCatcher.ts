@@ -3,13 +3,17 @@ import { ApiErrorEnum } from './enums/ErrorEnum';
 import { HttpException, HttpStatus } from '@nestjs/common';
 
 export const validationErrorCatcher = (error: ValidationError) => {
-    ApiErrorEnum.EMAIL;
-    switch (error.message) {
-        case ApiErrorEnum.EMAIL:
-            ApiErrorsHandler.emailError();
-            break;
-        default:
-            console.log(error.message);
+    for(const validationError of error.errors) {
+        switch (error.message) {
+            case ApiErrorEnum.EMAIL:
+                ApiErrorsHandler.emailError();
+                break;
+            case ApiErrorEnum.UNIQUE:
+                    ApiErrorsHandler.unicityError();
+                break;
+            default:
+                console.log(validationError.message);
+        }
     }
 };
 

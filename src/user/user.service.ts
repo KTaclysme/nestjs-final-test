@@ -16,14 +16,19 @@ export class UserService {
         } catch (error) {
             // TODO: refacto cette partie du code
             // throw error
-            console.log(email, error, '000000000000000000000000000000000000000000000000')
-            throw new HttpException(
-                "Cet utilisateur existe déjà ou n'est pas valide",
-                HttpStatus.BAD_REQUEST,
-            );
-            // if (error instanceof ValidationError) {
-            //     validationErrorCatcher(error);
-            // }
+            // console.log(email, error.errors, '000000000000000000000000000000000000000000000000')
+            // throw new HttpException(
+            //     "Cet utilisateur existe déjà ou n'est pas valide",
+            //     HttpStatus.BAD_REQUEST,
+            // );
+            console.log(error.errors.message)
+            if (error instanceof ValidationError) {
+                
+                for (const validationError of error.errors) {
+                    const errorMessage = validationError.message;
+                    validationErrorCatcher(error);
+                } 
+            }
         }
     }
     
