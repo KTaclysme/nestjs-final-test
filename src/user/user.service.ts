@@ -1,8 +1,8 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { UserRepository } from './user.repository';
 import { UserEntity } from './user.entity';
 import { validationErrorCatcher } from '../errors/validationErrorCatcher';
-import { ValidationError } from 'sequelize';
+import { ValidationError, ValidationErrorItem } from 'sequelize';
 
 @Injectable()
 export class UserService {
@@ -10,7 +10,10 @@ export class UserService {
 
     async addUser(email: string): Promise<UserEntity> {
         try {
-            console.log(email, '444444444444444444444444444444444444444444444444444444')
+            console.log(
+                email,
+                '444444444444444444444444444444444444444444444444444444',
+            );
             const newUser = await this._userRepository.addUser(email);
             return newUser;
         } catch (error) {
@@ -21,18 +24,14 @@ export class UserService {
             //     "Cet utilisateur existe déjà ou n'est pas valide",
             //     HttpStatus.BAD_REQUEST,
             // );
-            console.log(error.errors.message)
             if (error instanceof ValidationError) {
-                
-                for (const validationError of error.errors) {
-                    const errorMessage = validationError.message;
-                    validationErrorCatcher(error);
-                } 
+                const validationErrorItems: ValidationErrorItem[] =
+                    error.errors;
+                validationErrorCatcher(validationErrorItems);
             }
         }
     }
-    
-    
+
     async getUser(email: string): Promise<UserEntity> {
         try {
             const user = await this._userRepository.getUserByEmail(email);

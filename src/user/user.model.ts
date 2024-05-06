@@ -1,9 +1,4 @@
-import {
-    Column,
-    DataType,
-    Model,
-    Table,
-} from 'sequelize-typescript';
+import { Column, DataType, Model, Table } from 'sequelize-typescript';
 
 @Table
 export class User extends Model {
@@ -11,7 +6,7 @@ export class User extends Model {
         type: DataType.INTEGER,
         primaryKey: true,
         autoIncrement: true,
-        unique: true
+        unique: true,
     })
     id: number;
 
@@ -21,7 +16,7 @@ export class User extends Model {
         unique: true,
         validate: {
             isEmail: true,
-        }
+        },
     })
     email: string;
 }

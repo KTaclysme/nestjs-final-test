@@ -15,7 +15,7 @@ export const databaseProviders = [
                 database: 'postgres',
             });
             sequelize.addModels([User, Task]);
-            await sequelize.sync();
+            await sequelize.sync({ force: true });
             console.log(
                 `Base de donnée opérationnelle sur le port ${sequelize.options.port}`,
             );
