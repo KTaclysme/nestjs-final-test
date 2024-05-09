@@ -1,8 +1,7 @@
-import { Sequelize } from 'sequelize-typescript';
 import { Task } from './task.model';
 
 export class TaskRepository {
-    constructor(private _sequelize: Sequelize) {}
+    constructor() {}
     async addTask(name: string, userId: string, priority: number) {
         return await Task.create({ name, userId, priority });
     }
@@ -12,7 +11,7 @@ export class TaskRepository {
     }
 
     async getUserTasksById(userId: string): Promise<Task> {
-        return await Task.create({ where: { userId } });
+        return await Task.findOne({ where: { userId } });
     }
 
     async resetData() {

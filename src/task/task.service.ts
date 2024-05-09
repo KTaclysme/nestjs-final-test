@@ -1,7 +1,8 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { Task } from './task.model';
+import { Injectable } from '@nestjs/common';
 import { TaskRepository } from './task.repository';
 import { TaskEntity } from './task.entity';
+import { ValidationError, ValidationErrorItem } from 'sequelize';
+import { validationErrorCatcher } from 'src/errors/validationErrorCatcher';
 @Injectable()
 export class TaskService {
     constructor(
@@ -13,7 +14,11 @@ export class TaskService {
             const newTask = await this._taskRepository.addTask(name, userId, priority);
             return newTask;
         } catch (error) {
-            throw error;
+            if (error instanceof ValidationError) {
+                const validationErrorItems: ValidationErrorItem[] =
+                    error.errors;
+                validationErrorCatcher(validationErrorItems);
+            }
         }
     }
 
@@ -25,7 +30,7 @@ export class TaskService {
         }
     }
 
-    async getUserTasks(userId: string): Promise<TaskEntity> {
+    async getUserTasks(userId: string): Promise<TaskEntity[]> {
         try {
             return await this._taskRepository.getUserTasksById(userId);
         } catch (error) {
