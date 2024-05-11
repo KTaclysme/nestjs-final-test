@@ -1,4 +1,4 @@
-import { AllowNull, Column, Table } from 'sequelize-typescript';
+import { Table } from 'sequelize-typescript';
 import { Task } from './task.model';
 
 @Table

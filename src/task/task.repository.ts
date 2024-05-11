@@ -10,7 +10,7 @@ export class TaskRepository {
         return await Task.findOne({ where: { name } });
     }
 
-    async getUserTasksById(userId: string): Promise<Task> {
+    async getUserTasksById(userId: number): Promise<Task> {
         return await Task.findOne({ where: { userId } });
     }
 

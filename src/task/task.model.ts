@@ -1,15 +1,24 @@
-import { BelongsTo, Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript';
-import { User } from 'src/user/user.model';
+import {
+    Column,
+    DataType,
+    ForeignKey,
+    Model,
+    Table,
+} from 'sequelize-typescript';
+import { User } from '../user/user.model';
 
 @Table
 export class Task extends Model {
-
     @ForeignKey(() => User)
-    @Column
+    @Column({
+        type: DataType.INTEGER,
+        allowNull: false,
+        validate: {
+            isInt: true,
+            min: 1, // pas sur
+        },
+    })
     userId: number;
-
-    @BelongsTo(() => User)
-    user: User;
 
     @Column({
         type: DataType.STRING,
@@ -21,10 +30,9 @@ export class Task extends Model {
         type: DataType.INTEGER,
         allowNull: false,
         validate: {
-            min : 1, 
-            max : 10,
-        }
-    }
-    )
+            min: 1,
+            max: 10,
+        },
+    })
     priority: number;
 }
