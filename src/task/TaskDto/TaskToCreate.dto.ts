@@ -1,5 +1,5 @@
 export class TaskToCreateDto {
-    userId: string;
+    userId: number;
     name: string;
     priority: number;
 }

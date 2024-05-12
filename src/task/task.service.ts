@@ -3,13 +3,17 @@ import { TaskRepository } from './task.repository';
 import { TaskEntity } from './task.entity';
 import { ValidationError, ValidationErrorItem } from 'sequelize';
 import { validationErrorCatcher } from '../errors/validationErrorCatcher';
+import { UserService } from '../user/user.service';
 @Injectable()
 export class TaskService {
-    constructor(private readonly _taskRepository: TaskRepository) {}
+    constructor(
+        private readonly _taskRepository: TaskRepository,
+        private readonly _userService: UserService,
+    ) {}
 
     async addTask(
         name: string,
-        userId: string,
+        userId: number,
         priority: number,
     ): Promise<TaskEntity> {
         try {
@@ -37,13 +41,13 @@ export class TaskService {
     }
 
     async getUserTasks(userId: number): Promise<TaskEntity[]> {
+        await this._userService.getUserId(userId);
+
         try {
-            const task: TaskEntity =
+            const tasks: TaskEntity[] =
                 await this._taskRepository.getUserTasksById(userId);
-            const tasks: TaskEntity[] = [task];
             return tasks;
         } catch (error) {
-            console.log(error);
             throw error;
         }
     }

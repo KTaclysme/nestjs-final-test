@@ -2,7 +2,7 @@ import { Task } from './task.model';
 
 export class TaskRepository {
     constructor() {}
-    async addTask(name: string, userId: string, priority: number) {
+    async addTask(name: string, userId: number, priority: number) {
         return await Task.create({ name, userId, priority });
     }
 
@@ -10,8 +10,8 @@ export class TaskRepository {
         return await Task.findOne({ where: { name } });
     }
 
-    async getUserTasksById(userId: number): Promise<Task> {
-        return await Task.findOne({ where: { userId } });
+    async getUserTasksById(userId: number): Promise<Task[]> {
+        return await Task.findAll({ where: { userId } });
     }
 
     async resetData() {

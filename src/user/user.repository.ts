@@ -1,8 +1,7 @@
-import { Sequelize } from 'sequelize-typescript';
 import { User } from './user.model';
 
 export class UserRepository {
-    constructor(private _sequelize: Sequelize) {}
+    constructor() {}
 
     addUser(email: string): Promise<User> {
         return User.create({ email });
@@ -10,6 +9,11 @@ export class UserRepository {
 
     async getUserByEmail(email: string): Promise<User | null> {
         return await User.findOne({ where: { email } });
+    }
+
+    async getUserByUserId(userId: number): Promise<User | null> {
+        console.log({ userId: userId }, 'user Repo');
+        return await User.findOne({ where: { id: userId } });
     }
 
     async resetData() {

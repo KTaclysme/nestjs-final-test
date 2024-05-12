@@ -1,5 +1,5 @@
 import { ValidationErrorItem } from 'sequelize';
-import { ApiErrorEnum } from './enums/ErrorEnum';
+import { ValidationErrorEnum } from './enums/ErrorEnum';
 import { HttpException, HttpStatus } from '@nestjs/common';
 
 export const validationErrorCatcher = (
@@ -8,10 +8,10 @@ export const validationErrorCatcher = (
 ) => {
     for (const validationError of validationErrorItem) {
         switch (true) {
-            case validationError.message.includes(ApiErrorEnum.EMAIL):
+            case validationError.message.includes(ValidationErrorEnum.EMAIL):
                 ApiErrorsHandler.emailError();
                 break;
-            case validationError.message.includes(ApiErrorEnum.UNIQUE):
+            case validationError.message.includes(ValidationErrorEnum.UNIQUE):
                 ApiErrorsHandler.unicityError();
                 break;
             default:
@@ -25,25 +25,12 @@ export const validationErrorCatcher = (
 
 export const ApiErrorsHandler = {
     emailError: () => {
-        throw new HttpException('Mail invalide', HttpStatus.BAD_REQUEST, {
-            cause: '',
-            description: '#213',
-        });
+        throw new HttpException('Mail invalide', HttpStatus.BAD_REQUEST);
     },
     unicityError: () => {
-        throw new HttpException('Déjà existant', HttpStatus.CONFLICT, {
-            cause: '',
-            description: '',
-        });
+        throw new HttpException('Déjà existant', HttpStatus.CONFLICT);
     },
     default: (validationErrorMessage: string) => {
-        throw new HttpException(
-            validationErrorMessage,
-            HttpStatus.BAD_REQUEST,
-            {
-                cause: '',
-                description: '',
-            },
-        );
+        throw new HttpException(validationErrorMessage, HttpStatus.BAD_REQUEST);
     },
 };

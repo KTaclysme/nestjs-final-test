@@ -1,12 +1,4 @@
-import {
-    Body,
-    Controller,
-    Delete,
-    Get,
-    Param,
-    ParseIntPipe,
-    Post,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { TaskToCreateDto } from './TaskDto/TaskToCreate.dto';
 
@@ -29,8 +21,7 @@ export class TaskController {
     }
 
     @Get('user/:userId')
-    getUserTasksById(@Param('userId', ParseIntPipe) userId: number) {
-        // pas sur du parseintpipe
+    getUserTasksById(@Param('userId') userId: number) {
         return this.taskService.getUserTasks(userId);
     }
 
