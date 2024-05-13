@@ -13,6 +13,7 @@ export const databaseProviders = [
                 username: 'postgres',
                 password: 'postgres',
                 database: 'postgres',
+                logging: false,
             });
             sequelize.addModels([User, Task]);
             await sequelize.sync();

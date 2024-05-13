@@ -11,6 +11,9 @@ export const validationErrorCatcher = (
             case validationError.message.includes(ValidationErrorEnum.EMAIL):
                 ApiErrorsHandler.emailError();
                 break;
+            case validationError.message.includes(ValidationErrorEnum.ID):
+                ApiErrorsHandler.idError();
+                break;
             case validationError.message.includes(ValidationErrorEnum.UNIQUE):
                 ApiErrorsHandler.unicityError();
                 break;
@@ -27,8 +30,12 @@ export const ApiErrorsHandler = {
     emailError: () => {
         throw new HttpException('Mail invalide', HttpStatus.BAD_REQUEST);
     },
+    idError: () => {
+        throw new HttpException('Id invalide', HttpStatus.CONFLICT);
+    },
     unicityError: () => {
         throw new HttpException('Déjà existant', HttpStatus.CONFLICT);
+        // return new HttpException('Déjà existant', HttpStatus.CONFLICT);
     },
     default: (validationErrorMessage: string) => {
         throw new HttpException(validationErrorMessage, HttpStatus.BAD_REQUEST);

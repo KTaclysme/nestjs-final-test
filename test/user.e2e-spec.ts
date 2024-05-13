@@ -12,6 +12,7 @@ describe('UserController', () => {
         beforeEach(async () => {
             app = await createNestApplication();
             userService = app.get(UserService);
+            await userService.resetData(); // pour fixe si data existante
 
             await app.init();
         });
@@ -69,6 +70,32 @@ describe('UserController', () => {
                 .send(payload);
 
             expect(response.status).toBe(409);
+
+            // Fix du test du prof
+            // const payload = { email: 'name@test.com' };
+
+            // try {
+            //     await userService.addUser(payload.email);
+            // } catch (error) {
+            //     expect(error.status).toBe(409);
+            // }
+
+            // const response = await request(app.getHttpServer())
+            //     .post('/user')
+            //     .send(payload);
+
+            // expect(response.status).toBe(409);
+
+            // Mon ajout qui fonctionne
+            // const payload = { email: 'name@test.com' };
+            // await userService.addUser(payload.email);
+            // let response = await request(app.getHttpServer())
+            //     .post('/user')
+            //     .send(payload);
+            // response = await request(app.getHttpServer())
+            //     .post('/user')
+            //     .send(payload);
+            // expect(response.status).toBe(409);
         });
     });
 });

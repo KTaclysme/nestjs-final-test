@@ -32,16 +32,16 @@ export class UserService {
         }
     }
     async getUserId(userId: number): Promise<UserEntity> {
-        console.log({ userId: userId }, '1');
+        // console.log({ userId: userId }, '1');
         const user = await this._userRepository.getUserByUserId(userId);
-        console.log({ user: user }, '2');
-        console.log({ userId: userId }, '3');
+        // console.log({ user: user }, '2');
+        // console.log({ userId: userId }, '3');
         if (!user) {
-            console.log({ user: user }, '4');
+            // console.log({ user: user }, '4');
             apiErrorCatcher(ApiErrorEnum.USER_NULL);
         }
-        console.log({ userId: userId }, '5');
-        console.log({ user: user }, '6');
+        // console.log({ userId: userId }, '5');
+        // console.log({ user: user }, '6');
         return user;
     }
 
