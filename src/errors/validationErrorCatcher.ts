@@ -31,7 +31,7 @@ export const ApiErrorsHandler = {
         throw new HttpException('Mail invalide', HttpStatus.BAD_REQUEST);
     },
     idError: () => {
-        throw new HttpException('Id invalide', HttpStatus.CONFLICT);
+        throw new HttpException('Id invalide', HttpStatus.BAD_REQUEST);
     },
     unicityError: () => {
         throw new HttpException('Déjà existant', HttpStatus.CONFLICT);

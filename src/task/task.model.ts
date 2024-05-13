@@ -15,7 +15,7 @@ export class Task extends Model {
         allowNull: false,
         validate: {
             isInt: true,
-            min: 1, // pas sur
+            min: 1,
         },
     })
     userId: number;
@@ -23,6 +23,9 @@ export class Task extends Model {
     @Column({
         type: DataType.STRING,
         allowNull: false,
+        validate: {
+            notEmpty: true,
+        },
     })
     name: string;
 
@@ -30,6 +33,7 @@ export class Task extends Model {
         type: DataType.INTEGER,
         allowNull: false,
         validate: {
+            isInt: true,
             min: 1,
             max: 10,
         },
