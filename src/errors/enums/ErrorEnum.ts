@@ -4,5 +4,6 @@ export enum ValidationErrorEnum {
     UNIQUE = 'must be unique',
 }
 export enum ApiErrorEnum {
-    USER_NULL = 'User is null',
+    USER_NULL = 'UserId is null',
+    USER_ID_BAD_TYPE = 'UserId type is not valide',
 }

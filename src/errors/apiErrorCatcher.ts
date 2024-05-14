@@ -6,6 +6,9 @@ export const apiErrorCatcher = (apiErrorEnum: ApiErrorEnum) => {
         case apiErrorEnum.includes(ApiErrorEnum.USER_NULL):
             ApiErrorsHandler.userNullError();
             break;
+        case apiErrorEnum.includes(ApiErrorEnum.USER_ID_BAD_TYPE):
+            ApiErrorsHandler.userIdInvalideType();
+            break;
         default:
             console.log({
                 apiErrorEnum: apiErrorEnum,
@@ -16,7 +19,10 @@ export const apiErrorCatcher = (apiErrorEnum: ApiErrorEnum) => {
 
 export const ApiErrorsHandler = {
     userNullError: () => {
-        throw new HttpException('User is null', HttpStatus.BAD_REQUEST);
+        throw new HttpException('UserId is null', HttpStatus.BAD_REQUEST);
+    },
+    userIdInvalideType: () => {
+        throw new HttpException('UserId is not valid', HttpStatus.BAD_REQUEST);
     },
     default: (apiErrorMessage: string) => {
         throw new HttpException(apiErrorMessage, HttpStatus.BAD_REQUEST);

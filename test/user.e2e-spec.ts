@@ -18,7 +18,7 @@ describe('UserController', () => {
         });
 
         afterEach(async () => {
-            await userService.resetData();
+            // await userService.resetData();
             await app.close();
         });
 
