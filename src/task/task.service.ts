@@ -24,7 +24,6 @@ export class TaskService {
             );
             return newTask;
         } catch (error) {
-            // throw error;
             if (error instanceof ValidationError) {
                 const validationErrorItems: ValidationErrorItem[] =
                     error.errors;

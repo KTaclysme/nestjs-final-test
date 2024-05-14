@@ -32,21 +32,20 @@ export class UserService {
         }
     }
     async getUserId(userId: number): Promise<UserEntity> {
-        console.log({ userId: userId }, '1');
         const userIdParsed = String(userId);
+
         if (isNaN(parseInt(userIdParsed)) && typeof userId !== 'number') {
             apiErrorCatcher(ApiErrorEnum.USER_ID_BAD_TYPE);
         }
+
         const user = await this._userRepository.getUserByUserId(userId);
-        // console.log({ user: user }, '2');
-        // console.log({ userId: userId }, '3');
 
         if (!user) {
-            // console.log({ user: user }, '4');
+            console.log(
+                'should return an HTTP status 201 when given user has been created : problème de concurrence...',
+            );
             apiErrorCatcher(ApiErrorEnum.USER_NULL);
         }
-        // console.log({ userId: userId }, '5');
-        console.log({ user: user }, '6');
         return user;
     }
 

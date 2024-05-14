@@ -16,15 +16,12 @@ describe('TaskController', () => {
             app = await createNestApplication();
             taskService = app.get(TaskService);
             userService = app.get(UserService);
-            await taskService.resetData();
-            await userService.resetData();
-
             await app.init();
         });
 
         afterEach(async () => {
-            // await taskService.resetData();
-            // await userService.resetData();
+            await taskService.resetData();
+            await userService.resetData();
             await app.close();
         });
 

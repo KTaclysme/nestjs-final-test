@@ -4,7 +4,6 @@ import { HttpException, HttpStatus } from '@nestjs/common';
 
 export const validationErrorCatcher = (
     validationErrorItem: ValidationErrorItem[],
-    // pensez à des params pour garder une trace du parcours [ User ]: [ addUser ] : validationError.message
 ) => {
     for (const validationError of validationErrorItem) {
         switch (true) {
@@ -35,7 +34,6 @@ export const ApiErrorsHandler = {
     },
     unicityError: () => {
         throw new HttpException('Déjà existant', HttpStatus.CONFLICT);
-        // return new HttpException('Déjà existant', HttpStatus.CONFLICT);
     },
     default: (validationErrorMessage: string) => {
         throw new HttpException(validationErrorMessage, HttpStatus.BAD_REQUEST);

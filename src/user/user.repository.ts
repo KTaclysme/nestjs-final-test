@@ -12,7 +12,6 @@ export class UserRepository {
     }
 
     async getUserByUserId(userId: number): Promise<User | null> {
-        // console.log({ userId: userId }, 'user Repo');
         return await User.findOne({ where: { id: userId } });
     }
 
