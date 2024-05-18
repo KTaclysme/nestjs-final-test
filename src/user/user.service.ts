@@ -41,9 +41,6 @@ export class UserService {
         const user = await this._userRepository.getUserByUserId(userId);
 
         if (!user) {
-            console.log(
-                'should return an HTTP status 201 when given user has been created : problème de concurrence...',
-            );
             apiErrorCatcher(ApiErrorEnum.USER_NULL);
         }
         return user;
